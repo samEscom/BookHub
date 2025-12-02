@@ -1,7 +1,7 @@
 package main
 
-import "fmt"
+import "github.com/samEscom/BookHub/services/users/internal"
 
 func main() {
-	fmt.Println("app de users")
+	internal.App().Run()
 }

@@ -19,7 +19,7 @@ books:
 	docker compose up -d books-db books-service
 
 users:
-	docker compose up -d users-db
+	docker compose up -d users-db users-service
 
 loans:
 	docker compose up -d loans-db loans-service
