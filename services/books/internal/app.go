@@ -2,8 +2,8 @@ package internal
 
 import (
 	"github.com/samEscom/BookHub/common/mux"
-	"github.com/samEscom/BookHub/services/users/internal/handlers"
-	"github.com/samEscom/BookHub/services/users/internal/infra"
+	"github.com/samEscom/BookHub/services/books/internal/handlers"
+	"github.com/samEscom/BookHub/services/books/internal/infra"
 	"go.uber.org/fx"
 )
 

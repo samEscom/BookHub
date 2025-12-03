@@ -5,7 +5,7 @@ import (
 	"log"
 	"net/http"
 
-	"github.com/samEscom/BookHub/services/users/internal/handlers"
+	"github.com/samEscom/BookHub/services/books/internal/handlers"
 	"go.uber.org/fx"
 )
 
@@ -19,7 +19,7 @@ func NewServer(mux *http.ServeMux, h *handlers.Handlers) *Server {
 	s := &Server{
 		mux:      mux,
 		handlers: h,
-		addr:     ":8081",
+		addr:     ":8082",
 	}
 
 	s.routes()
@@ -29,15 +29,24 @@ func NewServer(mux *http.ServeMux, h *handlers.Handlers) *Server {
 
 func (s *Server) routes() {
 	s.mux.HandleFunc("/health", s.handlers.HealthCheck)
-	s.mux.HandleFunc("/users", s.handlers.CreateUser)
-	s.mux.HandleFunc("/users/", s.handlers.GetUserByID)
+	s.mux.HandleFunc("/books", func(w http.ResponseWriter, r *http.Request) {
+		// Route to ListBooks for GET /books or CreateBook for POST /books
+		if r.Method == http.MethodGet && r.URL.Path == "/books" {
+			s.handlers.ListBooks(w, r)
+		} else if r.Method == http.MethodPost {
+			s.handlers.CreateBook(w, r)
+		} else {
+			http.Error(w, "Method not allowed", http.StatusMethodNotAllowed)
+		}
+	})
+	s.mux.HandleFunc("/books/", s.handlers.GetBookByID)
 }
 
 func StartServer(lc fx.Lifecycle, s *Server) {
 	lc.Append(fx.Hook{
 		OnStart: func(ctx context.Context) error {
 			go func() {
-				log.Println("Users service running on", s.addr)
+				log.Println("Books service running on", s.addr)
 				if err := http.ListenAndServe(s.addr, s.mux); err != nil {
 					log.Fatal(err)
 				}

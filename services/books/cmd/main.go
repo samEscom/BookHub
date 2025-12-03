@@ -1,5 +1,7 @@
 package main
 
-func main(){
-	fmt.Println("app books")
+import "github.com/samEscom/BookHub/services/books/internal"
+
+func main() {
+	internal.App().Run()
 }

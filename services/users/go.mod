@@ -2,7 +2,10 @@ module github.com/samEscom/BookHub/services/users
 
 go 1.25.4
 
-require go.uber.org/fx v1.23.0
+require (
+	github.com/samEscom/BookHub/common v0.0.0-20251202063104-aafa82b8c091
+	go.uber.org/fx v1.23.0
+)
 
 require (
 	go.uber.org/dig v1.18.0 // indirect
