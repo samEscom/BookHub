@@ -7,6 +7,7 @@ import (
 
 	"github.com/samEscom/BookHub/services/users/internal/handlers/dto/request"
 	"github.com/samEscom/BookHub/services/users/internal/handlers/dto/response"
+	"go.uber.org/zap"
 )
 
 // CreateUser handles POST /users - creates a new user (mock)
@@ -35,6 +36,7 @@ func (h *Handlers) CreateUser(w http.ResponseWriter, r *http.Request) {
 		IsActive:  true,
 	}
 
+	h.logger.Info("User created", zap.String("username", req.Username))
 	w.Header().Set("Content-Type", "application/json")
 	w.WriteHeader(http.StatusCreated)
 	json.NewEncoder(w).Encode(mockUser)
@@ -71,6 +73,7 @@ func (h *Handlers) GetUserByID(w http.ResponseWriter, r *http.Request) {
 		IsActive:  true,
 	}
 
+	h.logger.Info("User retrieved", zap.String("id", id))
 	w.Header().Set("Content-Type", "application/json")
 	json.NewEncoder(w).Encode(mockUser)
 }

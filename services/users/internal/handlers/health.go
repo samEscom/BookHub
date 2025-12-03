@@ -3,12 +3,16 @@ package handlers
 import (
 	"encoding/json"
 	"net/http"
+
+	"go.uber.org/zap"
 )
 
-type Handlers struct{}
+type Handlers struct {
+	logger *zap.Logger
+}
 
-func NewHandlers() *Handlers {
-	return &Handlers{}
+func NewHandlers(logger *zap.Logger) *Handlers {
+	return &Handlers{logger: logger}
 }
 
 func (h *Handlers) HealthCheck(w http.ResponseWriter, r *http.Request) {
